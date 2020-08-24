@@ -1,8 +1,11 @@
 const http = require("http");
+const os = require("os");
 
-const initializeDb = require("../src/models/index")
+const hostname = os.hostname();
 
-const app = require('./app');
+const initializeDb = require("./src/models");
+
+const app = require('./src/app');
 
 const server = http.createServer(app);
 
@@ -15,7 +18,8 @@ initializeDb((err,db)=>{
   
   server.listen(PORT, () => {
     /* eslint-disable no-console */
-    console.log(`Listening: http://localhost:${PORT}`);
+    console.log(`-- Listening: http://localhost:${PORT} --`);
+    console.log(`-- Container ID: ${hostname} --`);
     /* eslint-enable no-console */
   });
 })

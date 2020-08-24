@@ -1,7 +1,9 @@
-# Express API Starter
+# Express API Starter with Sequelize V6
 
 Includes API Server utilities:
 
+* [sequelize](https://www.npmjs.com/package/sequelize)
+  * HTTP request logger middleware for node.js
 * [morgan](https://www.npmjs.com/package/morgan)
   * HTTP request logger middleware for node.js
 * [helmet](https://www.npmjs.com/package/helmet)
@@ -15,7 +17,7 @@ Development utilities:
   * nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
 * [eslint](https://www.npmjs.com/package/eslint)
   * ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
-* [mocha](https://www.npmjs.com/package/mocha)
+* [AVA](https://www.npmjs.com/package/mochahttps://github.com/avajs/ava)
   * ☕️ Simple, flexible, fun JavaScript test framework for Node.js & The Browser ☕️
 * [supertest](https://www.npmjs.com/package/supertest)
   * HTTP assertions made easy via superagent.
