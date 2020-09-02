@@ -3,54 +3,34 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class CustomerTicket extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       User.hasMany(models.Product,{
-         foreignKey: "userId",
-         as: 'products'
+       CustomerTicket.belongsTo(models.Customer,{
+         foreignKey: 'customerId'
        });
 
-       User.hasOne(models.Telephone,{
-         foreignKey: "userId",
-         as: "telephone"
+       CustomerTicket.belongsTo(models.Ticket,{
+         foreignKey: 'ticketId'
        });
-
-       User.hasMany(models.Ticket,{
-         foreignKey: 'userId'
-       });
-
-       User.hasMany(models.Ticket,{
-         as: 'assign',
-        foreignKey: 'assignId'
-      });
-
     }
   };
-  User.init({
-    id: {
+  CustomerTicket.init({
+    customerId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       unique: true
     },
-    firstname: {
-      type: DataTypes.STRING(64)
-    },
-    lastname: {
-      type: DataTypes.STRING(64)
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
+    ticketId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
       allowNull: false,
       unique: true
     },
@@ -62,19 +42,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: DataTypes.NOW,
     },
-    isActive: {
+      isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    }
+    }  
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
-    defaultScope:{
+    modelName: 'CustomerTicket',
+    tableName: 'customertickets',
+      defaultScope:{
       where: {
         isActive: true
       }
-    }
+    }  
   });
-  return User;
+  return CustomerTicket;
 };

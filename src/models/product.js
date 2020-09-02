@@ -3,35 +3,26 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Product extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       User.hasMany(models.Product,{
-         foreignKey: "userId",
-         as: 'products'
-       });
-
-       User.hasOne(models.Telephone,{
-         foreignKey: "userId",
-         as: "telephone"
-       });
-
-       User.hasMany(models.Ticket,{
-         foreignKey: 'userId'
-       });
-
-       User.hasMany(models.Ticket,{
-         as: 'assign',
-        foreignKey: 'assignId'
+      Product.belongsTo(models.User,{
+        foreignKey: 'userId',
+        as: 'products'
       });
 
+      Product.belongsToMany(models.Merchant,{
+        through: 'MerchantProduct',
+        foreignKey: 'productId',
+        otherKey:'merchantId',
+      });
     }
   };
-  User.init({
+  Product.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -39,20 +30,27 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    firstname: {
-      type: DataTypes.STRING(64)
-    },
-    lastname: {
-      type: DataTypes.STRING(64)
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
+    userId: {
+      type: DataTypes.UUID,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       unique: true
+    },
+    name: {
+      type: DataTypes.STRING(64),
+    },
+    slug: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+          notNull: {
+              msg: 'Slug can not be null'
+          }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -66,15 +64,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     }
-  }, {
+  },
+  {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: 'Product',
+    tableName: 'products',
     defaultScope:{
       where: {
         isActive: true
       }
     }
   });
-  return User;
+  return Product;
 };
+
+ 

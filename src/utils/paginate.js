@@ -1,14 +1,27 @@
-export const paginate = async (model, pageSize, pageLimit, search = {}, order = [], transform) => {
-    try {
-        const limit = parseInt(pageLimit, 10) || 10;
-        const page = parseInt(pageSize, 10) || 1;
+  /* 
+    simple paging and limit resources
+    http:localhost:3000/your-products-api?page=1&limit=10&order_by=created_at&order_direction=asc
+  */
 
-        // create an options object
-        let options = {
-            offset: getOffset(page, limit),
+  const paginate = async (model, pageSize, pageLimit, search = {}, order = [], transform, include=[] , meta = {}) => {
+  
+    try {
+
+        const rawAttrs = Object.keys(model.rawAttributes) || [];
+
+        let limit = parseInt(pageLimit, 10) || 10;
+        let page = parseInt(pageSize, 10) || 1; 
+        let offset =  getOffset(page,limit);
+
+          // create an options object
+          let options = {
+            include: include,
+            offset: offset,
             limit: limit,
+            rawAttributes: rawAttrs,
         };
 
+ 
         // check if the search object is empty
         if (Object.keys(search).length) {
             options = {options, ...search};
@@ -18,9 +31,9 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
         if (order && order.length) {
             options['order'] = order;
         }
-
+            
         // take in the model, take in the options
-        let {count, rows} = await model.findAndCountAll(options);
+        let { count, rows } = await model.findAndCountAll(options);
 
         // check if the transform is a function and is not null
         if (transform && typeof transform === 'function') {
@@ -28,15 +41,17 @@ export const paginate = async (model, pageSize, pageLimit, search = {}, order = 
         }
 
         return {
+            metas : meta,
             previousPage: getPreviousPage(page),
             currentPage: page,
             nextPage: getNextPage(page, limit, count),
-            total: count,
+            total: Number(count) ,
             limit: limit,
             data: rows
         }
+
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -45,7 +60,7 @@ const getOffset = (page, limit) => {
 }
 
 const getNextPage = (page, limit, total) => {
-    if ((total/limit) > page) {
+    if ((total / limit) > page) {
         return page + 1;
     }
 
@@ -58,3 +73,6 @@ const getPreviousPage = (page) => {
     }
     return page - 1;
 }
+
+
+module.exports = paginate;

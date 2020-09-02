@@ -1,27 +1,36 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('categorytickets', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4 // Or Sequelize.UUIDV1
       },
-      firstname: {
+      sla_level: {
+        allowNull: false,
+        type: Sequelize.INTEGER(64)
+      },
+      sla_name: {
+        allowNull: false,
         type: Sequelize.STRING(64)
       },
-      lastname: {
+      category: {
+        allowNull: false,
         type: Sequelize.STRING(64)
       },
-      password:{
-        type: Sequelize.STRING,
-        allowNull: false
+      response_time: {
+        allowNull: false,
+        type: Sequelize.STRING(64)
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull:false,
-        unique: true
+      resolution_time: {
+        allowNull: false,
+        type: Sequelize.STRING(64)
+      },
+      sla_warning_time: {
+        allowNull: false,
+        type: Sequelize.STRING(64)
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -38,6 +47,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('categorytickets');
   }
 };

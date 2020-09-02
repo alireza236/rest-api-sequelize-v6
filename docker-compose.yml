@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     init: true
     tty: true
-    restart: unless-stopped
+    restart: always
     working_dir: /home/node/app
     networks: 
       - node_app_network

@@ -3,56 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Telephone extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       User.hasMany(models.Product,{
-         foreignKey: "userId",
-         as: 'products'
-       });
-
-       User.hasOne(models.Telephone,{
+       Telephone.belongsTo(models.User,{
          foreignKey: "userId",
          as: "telephone"
        });
-
-       User.hasMany(models.Ticket,{
-         foreignKey: 'userId'
-       });
-
-       User.hasMany(models.Ticket,{
-         as: 'assign',
-        foreignKey: 'assignId'
-      });
-
     }
   };
-  User.init({
-    id: {
+  Telephone.init({
+    userId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       unique: true
     },
-    firstname: {
-      type: DataTypes.STRING(64)
-    },
-    lastname: {
-      type: DataTypes.STRING(64)
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+    phone_number: {
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -61,20 +34,20 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: DataTypes.NOW,
-    },
-    isActive: {
+   },
+   isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    }
+   }
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: 'Telephone',
+    tableName: 'telephones',
     defaultScope:{
-      where: {
+      where :{
         isActive: true
       }
     }
   });
-  return User;
+  return Telephone;
 };

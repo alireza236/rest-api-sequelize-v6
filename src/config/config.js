@@ -10,6 +10,12 @@ module.exports = {
     host: '127.0.0.1',
     port: 3306,
     dialect: 'mysql',
+    pool: {
+      max: 20,
+      min: 0,
+      acquire: 30000,
+      idle: 30000
+    }
   },
   test: {
     username: process.env.CI_DB_USERNAME,
@@ -26,5 +32,12 @@ module.exports = {
     host: process.env.PROD_DB_HOSTNAME,
     port: process.env.PROD_DB_PORT,
     dialect: 'mysql',
+    logging: false,
+    pool: {
+      max: 20,
+      min: 0,
+      acquire: 30000,
+      idle: 30000
+    }
   }
 };

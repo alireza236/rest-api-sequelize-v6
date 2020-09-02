@@ -3,35 +3,23 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Customer extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       User.hasMany(models.Product,{
-         foreignKey: "userId",
-         as: 'products'
-       });
+       
+      Customer.belongsToMany(models.Ticket,{
+        through: 'CustomerTicket',
+        foreignKey: 'customerId',
+        otherKey: 'ticketId'
 
-       User.hasOne(models.Telephone,{
-         foreignKey: "userId",
-         as: "telephone"
-       });
-
-       User.hasMany(models.Ticket,{
-         foreignKey: 'userId'
-       });
-
-       User.hasMany(models.Ticket,{
-         as: 'assign',
-        foreignKey: 'assignId'
-      });
-
+      })
     }
   };
-  User.init({
+  Customer.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -40,19 +28,20 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     firstname: {
-      type: DataTypes.STRING(64)
+      type: DataTypes.STRING
     },
     lastname: {
-      type: DataTypes.STRING(64)
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     email: {
-      type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      type: DataTypes.STRING
+    },
+    telephone: {
+      type: DataTypes.STRING
+    },
+    address: {
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -68,13 +57,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: 'Customer',
+    tableName: 'customers',
     defaultScope:{
       where: {
         isActive: true
       }
     }
+
   });
-  return User;
+  return Customer;
 };

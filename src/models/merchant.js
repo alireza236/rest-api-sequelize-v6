@@ -3,35 +3,21 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Merchant extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-       User.hasMany(models.Product,{
-         foreignKey: "userId",
-         as: 'products'
+       Merchant.belongsToMany(models.Product,{
+         through: 'MerchantProduct',
+         foreignKey: 'merchantId',
+         otherKey: 'productId',
        });
-
-       User.hasOne(models.Telephone,{
-         foreignKey: "userId",
-         as: "telephone"
-       });
-
-       User.hasMany(models.Ticket,{
-         foreignKey: 'userId'
-       });
-
-       User.hasMany(models.Ticket,{
-         as: 'assign',
-        foreignKey: 'assignId'
-      });
-
     }
   };
-  User.init({
+  Merchant.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -39,20 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    firstname: {
-      type: DataTypes.STRING(64)
+    name: {
+      type: DataTypes.STRING
     },
-    lastname: {
-      type: DataTypes.STRING(64)
+    owner_name : {
+       type: DataTypes.STRING(64)
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+    address : {
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -68,13 +48,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'users',
+    modelName: 'Merchant',
+    tableName: 'merchants',
     defaultScope:{
       where: {
         isActive: true
       }
     }
   });
-  return User;
+  return Merchant;
 };
