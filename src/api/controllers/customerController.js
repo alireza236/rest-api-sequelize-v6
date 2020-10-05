@@ -10,7 +10,10 @@ const _ = require("lodash");
 
 const getCustomer = async (req, res, next) =>{
 
-    const { q, id,  sort, offset, limit, embeds } = req.query;
+    const { q, id,  sort,  offset, limit,inc_attrs, exc_attrs, embeds } = req.query;
+
+    //get all attributes on model.
+    const rawAttrs = Object.keys(db.Customer.rawAttributes) || [];
 
     let collection;
     let offsetSize = 0;
@@ -18,6 +21,30 @@ const getCustomer = async (req, res, next) =>{
     let order = [];
     let include = [];
     let where = {};
+    let attributes = inc_attrs ? _.split(inc_attrs, ',') : rawAttrs;
+
+
+    function subInclude(embed){
+      include.push(embed)
+    };
+
+    function embed(embeds){
+      switch (embeds) {
+        case 'tickets':
+          return {
+            model: db.Ticket,
+            through: {
+              attributes:[] 
+            },
+            //include:[{
+              //model: db.CategoryTicket
+            //}],
+            required: true,
+          };
+        default:
+          return null;
+       };
+    };
     
       //override limit && offset
       if (offset && limit) {
@@ -27,7 +54,7 @@ const getCustomer = async (req, res, next) =>{
 
       if (id) {
          where.id = id
-      }
+      };
 
       if (q) {
            where.email = {
@@ -35,12 +62,17 @@ const getCustomer = async (req, res, next) =>{
            }
       };
 
+      if (exc_attrs) {
+         attributes = {
+           exclude: _.split(exc_attrs, ',')
+        };
+      };
+
       //sorting orderBy attributes ASC or DESC
       if (sort) {
           order = sort ? orderBuilder(sort) :  order;
       }
 
-            
       if (embeds) {
         
         let includes = !_.isArray(_.split(embeds, ',')) ? [].push(embeds) : _.split(embeds, ',');
@@ -53,44 +85,29 @@ const getCustomer = async (req, res, next) =>{
         });
       };
 
-      function subInclude(embed){
-         include.push(embed)
-      };
-
-      function embed(embeds){
-        switch (embeds) {
-          case 'tickets':
-            return {
-              model: db.Ticket,
-              through: {
-                attributes:[] 
-              },
-              required: false
-            };
-          default:
-            return null;
-        };
-     };
-       
-
+         
       let options = {
           include,
           order,
+          attributes,
           where,
           limit : limitSize,
           offset : offsetSize, 
        };
+
+       console.log('options', options);
+       
 
         //remove object limit & offset, unlimited query
       if (limit && limit == 0) {
           options = _.omit(options, ['offset', 'limit']);
       };
 
-    try {
-        collection = await db.Customer.findAndCountAll(options);
-    } catch (error) {
-       return next(error); 
-    }
+      try {
+          collection = await db.Customer.findAndCountAll(options);
+      } catch (error) {
+        return next(error); 
+      }
 
      const response = responseRedactor(collection, {
         limit : limitSize,
@@ -101,7 +118,7 @@ const getCustomer = async (req, res, next) =>{
 
 };
 
-const createCustomer = async (req, res, next) =>{
+const createCustomer = async (req, res, next) => {
    
     const { firstname, lastname, email, telephone, address } = req.body;
 
@@ -121,7 +138,7 @@ const createCustomer = async (req, res, next) =>{
 
     res.status(201).json({ message: "success"});
      
-}
+};
 
 exports.getCustomer = getCustomer;
 exports.createCustomer = createCustomer;

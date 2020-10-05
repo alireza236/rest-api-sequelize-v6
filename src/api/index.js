@@ -7,6 +7,7 @@ const merchant = require('./routes/merchantRoute');
 const tickets = require('./routes/ticketRoutes');
 const customers = require('./routes/customerRoutes');
 const categoryTickets = require('./routes/categoryTicketRoutes');
+const teams = require('./routes/teamRoutes');
 
 const router = express.Router();
 
@@ -21,5 +22,6 @@ router.use('/merchants', merchant);
 router.use('/tickets', tickets);
 router.use('/customers', customers);
 router.use('/categorytickets', categoryTickets);
+router.use('/teams', teams);
 
 module.exports = router;

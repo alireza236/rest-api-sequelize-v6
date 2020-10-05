@@ -12,46 +12,9 @@ const getListTicket = async (req, res, next) => {
     const { q, id,  sort, offset, limit, inc_attrs, exc_attrs, embeds  } = req.query;
 
 
-    function subInclude(embed){
-      include.push(embed)
-    };
- 
-   // include relationship model entities.. 
-   function embed(embeds){
-     switch (embeds) {
-       case 'customers':
-         return {
-           attributes: {
-             exclude:  ['createdAt', 'updatedAt']
-           },
-           model: db.Customer,
-           through: {
-             attributes:[] 
-           },
-           //required: true
-         };
-       case 'category':
-          return {
-            model: db.CategoryTicket
-          }; 
-       case 'assign':
-          return {
-            model: db.User,
-            as: 'assign'
-          }; 
-       case 'user':
-          return {
-            model: db.User,
-          };   
-       default:
-         return null;
-     };
-  };  
-
-
-    //get all attributes on model.
-    const rawAttrs = Object.keys(db.Ticket.rawAttributes) || [];
-
+       //get all attributes on model.
+    const rawAttrs =  Object.keys(await db.Ticket.rawAttributes) || [];
+    
     
     let collection;
     let offsetSize = 0;
@@ -61,6 +24,41 @@ const getListTicket = async (req, res, next) => {
     let where = {};
     let attributes = inc_attrs ? _.split(inc_attrs, ',') : rawAttrs;
 
+    function subInclude(embed){
+       include.push(embed)
+    };
+ 
+    // include relationship model entities.. 
+    function embed(embeds){
+      switch (embeds) {
+        case 'customers':
+          return {
+            attributes: {
+              exclude:  ['createdAt', 'updatedAt']
+            },
+            model: db.Customer,
+            through: {
+              attributes:[] 
+            },
+            required: true
+          };
+        case 'category':
+            return {
+              model: db.CategoryTicket
+            }; 
+        case 'assign':
+            return {
+              model: db.User,
+              as: 'assign'
+            }; 
+        case 'user':
+            return {
+              model: db.User,
+            };   
+        default:
+          return null;
+      };
+    };  
 
       //override limit && offset
       if (offset && limit) {
@@ -78,11 +76,12 @@ const getListTicket = async (req, res, next) => {
            }
       };
 
+     
       if (exc_attrs) {
            attributes = {
              exclude: _.split(exc_attrs, ',')
           };
-      }
+      };
 
       //sorting orderBy attributes ASC or DESC
       if (sort) {
@@ -108,6 +107,9 @@ const getListTicket = async (req, res, next) => {
           limit : limitSize,
           offset : offsetSize, 
        };
+
+       console.log('options', options);
+       
 
         //remove object limit & offset, unlimited query
       if (limit && limit == 0) {
@@ -145,7 +147,7 @@ let customer_ticket;
 
   try {
       customer_ticket = await db.CustomerTicket.build({
-        customerId : "8f60121b-238c-4dae-99cb-b2777fbed79d",
+        customerId : "ba5af8af-7bff-449d-9056-6cb2094c0344",
         ticketId: ticket.id
     });
   } catch (error) {

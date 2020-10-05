@@ -7,7 +7,7 @@ module.exports = {
     username: 'root',
     password: 'root',
     database: 'db_myapp',
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     port: 3306,
     dialect: 'mysql',
     pool: {
