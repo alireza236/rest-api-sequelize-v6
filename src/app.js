@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const compression = require("compression");
-const parseError = require("parse-error");
+
 const { expressPino } = require("./utils/pino-logger");
 
 require('dotenv').config();
@@ -33,6 +33,4 @@ app.use(middlewares.errorHandler);
 
 module.exports = app;
 
-process.on('unhandledRejection', error => {
-  console.error('Uncaught Error', parseError(error));
-});
+

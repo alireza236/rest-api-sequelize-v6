@@ -6,7 +6,7 @@ module.exports = {
   development: {
     username: 'root',
     password: 'root',
-    database: 'db_myapp',
+    database: 'db_nodeskeleton',
     host: '0.0.0.0',
     port: 3306,
     dialect: 'mysql',
@@ -31,7 +31,7 @@ module.exports = {
     database: process.env.PROD_DB_NAME,
     host: process.env.PROD_DB_HOSTNAME,
     port: process.env.PROD_DB_PORT,
-    dialect: 'mysql',
+    dialect: process.env.PROD_DB_DIALECT,
     logging: false,
     pool: {
       max: 20,

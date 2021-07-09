@@ -4,8 +4,8 @@
   "description": " A basic starter for an express.js API",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "node index.js", 
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint --fix src",
     "test": "ava"
   },
@@ -36,6 +36,7 @@
   "devDependencies": {
     "ava": "^3.11.1",
     "babel-register": "^6.26.0",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2",
     "test-listen": "^1.1.0"

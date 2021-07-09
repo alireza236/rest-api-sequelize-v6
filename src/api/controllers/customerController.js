@@ -8,7 +8,7 @@ const { responseRedactor } = require("../../utils/lib");
 
 const _ = require("lodash");
 
-const getCustomer = async (req, res, next) =>{
+const getCustomer = async (req, res, next) => {
 
     const { q, id,  sort,  offset, limit,inc_attrs, exc_attrs, embeds } = req.query;
 

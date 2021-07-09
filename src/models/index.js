@@ -6,6 +6,7 @@ require("dotenv").config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const parseError = require("parse-error");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'production';
 const config = require(`${__dirname}'../../config/config`)[env];
@@ -15,15 +16,16 @@ const  { logger }  = require("../utils/pino-logger");
 
   let sequelize;
   if (config.use_env_variable) {
+    
     sequelize = new Sequelize(process.env[config.use_env_variable], config);
   } else {
     sequelize = new Sequelize(config.database, config.username, config.password, config,{ logging: msg => logger.info(msg) } );
+    logger.info(`-- connection db has been established successfully --`);
   }
-
+  
+  //console.log('ENV', config);
   
   sequelize.authenticate().then(()=>{
-  
-    logger.info(`connection db has been established successfully`);
   
     fs
     .readdirSync(__dirname)
@@ -44,8 +46,8 @@ const  { logger }  = require("../utils/pino-logger");
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
   
-  }).catch(err =>{
-     console.error(err)
+  }).catch(error =>{
+     console.error('Connection Database Error', parseError(error));
   });
 
 module.exports = db;
