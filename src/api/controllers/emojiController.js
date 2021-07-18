@@ -1,6 +1,8 @@
 const getEmoji = async (req, res, next) =>{
 
-        res.json(['😀', '😳', '🙄']);
+        //res.json(['😀', '😳', '🙄']);
+
+        res.status(200).json({ data: req.user });
 };
 
 const createEmoji = async (req, res, next ) => {

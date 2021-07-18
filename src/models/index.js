@@ -23,7 +23,8 @@ const  { logger }  = require("../utils/pino-logger");
     logger.info(`-- connection db has been established successfully --`);
   }
   
-  //console.log('ENV', config);
+  //console.log('ENV', env);
+  //console.log('CONFIG', config);
   
   sequelize.authenticate().then(()=>{
   

@@ -65,6 +65,7 @@ const getListTicket = async (req, res, next) => {
          offsetSize = Number(offset); 
          limitSize = Number(limit);
       };
+      
 
       if (id) {
          where.id = id

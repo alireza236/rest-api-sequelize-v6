@@ -15,8 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         through: 'CustomerTicket',
         foreignKey: 'customerId',
         otherKey: 'ticketId'
-
-      })
+      });
     }
   };
   Customer.init({

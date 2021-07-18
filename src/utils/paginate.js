@@ -9,8 +9,8 @@
 
         const rawAttrs = Object.keys(model.rawAttributes) || [];
 
-        let limit = Number(pageLimit, 10) || 10;
-        let page = Number(pageSize, 10) || 1; 
+        let limit = parseInt(pageLimit, 10) || 10;
+        let page = parseInt(pageSize, 10) || 1; 
         let offset =  getOffset(page,limit);
 
           // create an options object
@@ -45,7 +45,7 @@
             previousPage: getPreviousPage(page),
             currentPage: page,
             nextPage: getNextPage(page, limit, count),
-            total: Number(count) ,
+            total: parseInt(count) ,
             limit: limit,
             data: rows
         }

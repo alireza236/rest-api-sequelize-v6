@@ -1,4 +1,5 @@
 const ErrorResponse = require("./utils/errorResponse");
+const { logger } = require("./utils/pino-logger");
 
 const  notFound = (req, res, next) => {
   res.status(404);
@@ -21,9 +22,9 @@ const  notFound = (req, res, next) => {
     error = new ErrorResponse(message, 400);
   }
 
-  console.log(error.message);
+  logger.error(error.message);
 
-  res.status(error.statusCode || 500).json({
+  return res.status(error.statusCode || 500).json({
     success: false,
     error: error.message || "Server Error",
   });

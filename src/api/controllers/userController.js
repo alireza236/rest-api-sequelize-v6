@@ -84,6 +84,7 @@ const userCreate = async (req, res, next ) => {
            await user.createTelephone({ phone_number }); 
            await user.save(); 
         } catch (error) {
+          
           return next(error);
         }
    
