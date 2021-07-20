@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Telephone extends Model {
     /**
@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       Telephone.belongsTo(models.User,{
-         foreignKey: "userId",
-         as: "telephone"
-       });
+    static associate (models) {
+      Telephone.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'telephone'
+      })
     }
   };
   Telephone.init({
@@ -29,25 +29,25 @@ module.exports = (sequelize, DataTypes) => {
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
-   },
-   isActive: {
+      allowNull: DataTypes.NOW
+    },
+    isActive: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-   }
+    }
   }, {
     sequelize,
     modelName: 'Telephone',
     tableName: 'telephones',
-    defaultScope:{
-      where :{
+    defaultScope: {
+      where: {
         isActive: true
       }
     }
-  });
-  return Telephone;
-};
+  })
+  return Telephone
+}

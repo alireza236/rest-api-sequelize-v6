@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model, Sequelize
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class CategoryTicket extends Model {
     /**
@@ -9,11 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      CategoryTicket.hasMany(models.Ticket,{
+    static associate (models) {
+      CategoryTicket.hasMany(models.Ticket, {
         foreignKey: 'categoryticketId'
-      });
-
+      })
     }
   };
   CategoryTicket.init({
@@ -24,37 +23,37 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    sla_level :{
+    sla_level: {
       allowNull: false,
       type: DataTypes.INTEGER(64)
     },
-    sla_name :{
+    sla_name: {
       allowNull: false,
       type: DataTypes.STRING(64)
     },
-    category :{
+    category: {
       allowNull: false,
       type: DataTypes.STRING(64)
     },
-    response_time :{
+    response_time: {
       allowNull: false,
       type: DataTypes.STRING(64)
     },
-    resolution_time :{
+    resolution_time: {
       allowNull: false,
       type: DataTypes.STRING(64)
     },
-    sla_warning_time :{
+    sla_warning_time: {
       allowNull: false,
       type: DataTypes.STRING(64)
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -64,11 +63,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'CategoryTicket',
     tableName: 'categorytickets',
-    defaultScope:{
+    defaultScope: {
       where: {
         isActive: true
       }
     }
-  });
-  return CategoryTicket;
-};
+  })
+  return CategoryTicket
+}

@@ -1,6 +1,5 @@
-const fs = require('fs');
 
-require("dotenv").config()
+require('dotenv').config()
 
 module.exports = {
   development: {
@@ -23,7 +22,7 @@ module.exports = {
     database: process.env.CI_DB_NAME,
     host: '127.0.0.1',
     port: 3306,
-    dialect: 'mysql',
+    dialect: 'mysql'
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -40,4 +39,4 @@ module.exports = {
       idle: 30000
     }
   }
-};
+}
