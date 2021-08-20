@@ -1,6 +1,7 @@
 
 require('dotenv').config()
 
+const { logger } = require('../utils/pino-logger')
 module.exports = {
   development: {
     username: 'root',
@@ -14,7 +15,8 @@ module.exports = {
       min: 0,
       acquire: 30000,
       idle: 30000
-    }
+    },
+    logging: msg => logger.info(`-- ${msg} --`)
   },
   test: {
     username: process.env.CI_DB_USERNAME,

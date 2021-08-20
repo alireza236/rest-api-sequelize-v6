@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Merchant extends Model {
     /**
@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       Merchant.belongsToMany(models.Product,{
-         through: 'MerchantProduct',
-         foreignKey: 'merchantId',
-         otherKey: 'productId',
-       });
+    static associate (models) {
+      Merchant.belongsToMany(models.Product, {
+        through: 'MerchantProduct',
+        foreignKey: 'merchantId',
+        otherKey: 'productId'
+      })
     }
   };
   Merchant.init({
@@ -28,19 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING
     },
-    owner_name : {
-       type: DataTypes.STRING(64)
+    owner_name: {
+      type: DataTypes.STRING(64)
     },
-    address : {
+    address: {
       type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -50,11 +50,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Merchant',
     tableName: 'merchants',
-    defaultScope:{
+    defaultScope: {
       where: {
         isActive: true
       }
     }
-  });
-  return Merchant;
-};
+  })
+  return Merchant
+}

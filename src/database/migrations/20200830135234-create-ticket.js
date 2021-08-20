@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('tickets', {
@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4 // Or Sequelize.UUIDV1
-      },    
+      },
       categoryticketId: {
         allowNull: false,
         type: Sequelize.UUID,
@@ -29,12 +29,12 @@ module.exports = {
       subject: {
         type: Sequelize.STRING
       },
-      description:{
+      description: {
         type: Sequelize.TEXT
       },
       status: {
-          type: Sequelize.ENUM,
-          values: ['open', 'closed', 'pending','resolved']
+        type: Sequelize.ENUM,
+        values: ['open', 'closed', 'pending', 'resolved']
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -48,9 +48,9 @@ module.exports = {
         allowNull: Sequelize.NOW,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('tickets');
+    await queryInterface.dropTable('tickets')
   }
-};
+}

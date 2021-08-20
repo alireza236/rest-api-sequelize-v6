@@ -19,8 +19,8 @@ app.use(cors())
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
-//app.use(compression());
-//app.use(helmet());
+// app.use(compression());
+// app.use(helmet());
 
 app.use(expressPino)
 

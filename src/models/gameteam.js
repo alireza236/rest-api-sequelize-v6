@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class GameTeam extends Model {
     /**
@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       GameTeam.belongsTo(models.Team, {
-         foreignKey: 'teamId'
-       });
+    static associate (models) {
+      GameTeam.belongsTo(models.Team, {
+        foreignKey: 'teamId'
+      })
 
-       GameTeam.belongsTo(models.Game, {
-         foreignKey: 'gameId'
-       });
+      GameTeam.belongsTo(models.Game, {
+        foreignKey: 'gameId'
+      })
     }
   };
   GameTeam.init({
@@ -26,18 +26,18 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       unique: true
-    }, 
+    },
     teamId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       unique: true
-    }, 
+    }
   }, {
     sequelize,
     modelName: 'GameTeam',
     tableName: 'gameteams'
-  });
-  return GameTeam;
-};
+  })
+  return GameTeam
+}

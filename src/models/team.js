@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Team extends Model {
     /**
@@ -9,51 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       Team.belongsToMany(models.Game, {
-         through : 'GameTeam',
-         foreignKey: 'teamId',
-         otherKey: 'gameId',
-         as: 'game'
-       });
+    static associate (models) {
+      Team.belongsToMany(models.Game, {
+        through: 'GameTeam',
+        foreignKey: 'teamId',
+        otherKey: 'gameId',
+        as: 'game'
+      })
 
-       Team.hasMany(models.GameTeam,{
-         foreignKey: 'teamId'
-       });
+      Team.hasMany(models.GameTeam, {
+        foreignKey: 'teamId'
+      })
 
-       Team.hasMany(models.Player, {
-         foreignKey: 'teamId',
-         as: 'player'
-       });
+      Team.hasMany(models.Player, {
+        foreignKey: 'teamId',
+        as: 'player'
+      })
     }
   };
   Team.init({
-    id :{
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       unique: true
     },
-    name: { 
+    name: {
       type: DataTypes.STRING(64)
     },
-    country_base: { 
+    country_base: {
       type: DataTypes.STRING(64)
     },
-    region: { 
+    region: {
       type: DataTypes.STRING(64)
     },
-    owner_name: { 
+    owner_name: {
       type: DataTypes.STRING(64)
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -64,10 +64,10 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Team',
     tableName: 'teams',
     defaultScope: {
-      where :{
+      where: {
         isActive: true
       }
     }
-  });
-  return Team;
-};
+  })
+  return Team
+}

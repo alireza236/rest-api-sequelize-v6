@@ -7,6 +7,8 @@ const { logger } = require('./src/utils/pino-logger')
 
 const hostname = os.hostname()
 
+const host = os.networkInterfaces()
+
 const app = require('./src/app')
 
 const server = http.createServer(app)
@@ -17,8 +19,8 @@ const PORT = env === 'production' ? process.env.PORT : 5000
 
 server.listen(PORT, () => {
   /* eslint-disable no-console */
-  logger.info(`-- Listening: http://localhost:${PORT} --`)
-  logger.info(`-- Host: ${hostname} --`)
+  logger.info(`-- Listening: http://${host.lo[0].address}:${PORT} --`)
+  logger.info(`-- Hostname: ${hostname} --`)
   logger.info(`-- Running mode: ${env} --`)
   /* eslint-enable no-console */
 })

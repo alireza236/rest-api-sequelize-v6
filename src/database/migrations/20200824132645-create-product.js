@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('products', {
@@ -14,13 +14,13 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4 // Or Sequelize.UUIDV1
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       slug: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       isActive: {
         type: Sequelize.BOOLEAN,
@@ -34,9 +34,9 @@ module.exports = {
         allowNull: Sequelize.NOW,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('products');
+    await queryInterface.dropTable('products')
   }
-};
+}

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('telephones', {
@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue : Sequelize.UUIDV4 
+        defaultValue: Sequelize.UUIDV4
       },
       phone_number: {
         type: Sequelize.STRING
@@ -23,9 +23,9 @@ module.exports = {
         allowNull: Sequelize.NOW,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('telephones');
+    await queryInterface.dropTable('telephones')
   }
-};
+}

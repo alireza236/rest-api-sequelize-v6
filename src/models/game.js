@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Game extends Model {
     /**
@@ -9,55 +9,55 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       Game.belongsToMany(models.Team, {
-         through : 'GameTeam',
-         foreignKey: 'gameId',
-         otherKey: 'teamId',
-         as: 'team'
-       });
+    static associate (models) {
+      Game.belongsToMany(models.Team, {
+        through: 'GameTeam',
+        foreignKey: 'gameId',
+        otherKey: 'teamId',
+        as: 'team'
+      })
 
-       Game.hasMany(models.GameTeam,{
-         foreignKey: 'gameId'
-       });
+      Game.hasMany(models.GameTeam, {
+        foreignKey: 'gameId'
+      })
     }
   };
   Game.init({
-    id :{
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
       unique: true
     },
-    name: { 
+    name: {
       type: DataTypes.STRING(64),
       allowNull: false
     },
-    federation : {
+    federation: {
       type: DataTypes.STRING(64),
       allowNull: false
     },
-    region :{
+    region: {
       type: DataTypes.ENUM,
-      values: ['asia', 'europe', 'africa','america','oceania'],
+      values: ['asia', 'europe', 'africa', 'america', 'oceania'],
       allowNull: false
     },
     match_type: {
       type: DataTypes.ENUM,
-      values: ['friendly', 'championship', 'charity','league','handicap'],
+      values: ['friendly', 'championship', 'charity', 'league', 'handicap'],
       allowNull: false
     },
-    sponsorship : {
+    sponsorship: {
       type: DataTypes.STRING(54)
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -72,6 +72,6 @@ module.exports = (sequelize, DataTypes) => {
         isActive: true
       }
     }
-  });
-  return Game;
-};
+  })
+  return Game
+}

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('playergameteams', {
@@ -18,19 +18,19 @@ module.exports = {
       },
       createdAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
       updatedAt: {
         type: Sequelize.DATE,
-        allowNull: Sequelize.NOW,
+        allowNull: Sequelize.NOW
       },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('playergameteams');
+    await queryInterface.dropTable('playergameteams')
   }
-};
+}

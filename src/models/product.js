@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -9,17 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      Product.belongsTo(models.User,{
+    static associate (models) {
+      Product.belongsTo(models.User, {
         foreignKey: 'userId',
         as: 'products'
-      });
+      })
 
-      Product.belongsToMany(models.Merchant,{
+      Product.belongsToMany(models.Merchant, {
         through: 'MerchantProduct',
         foreignKey: 'productId',
-        otherKey:'merchantId',
-      });
+        otherKey: 'merchantId'
+      })
     }
   };
   Product.init({
@@ -37,28 +37,28 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     name: {
-      type: DataTypes.STRING(64),
+      type: DataTypes.STRING(64)
     },
     slug: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
       validate: {
-          notNull: {
-              msg: 'Slug can not be null'
-          }
+        notNull: {
+          msg: 'Slug can not be null'
+        }
       }
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -69,13 +69,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Product',
     tableName: 'products',
-    defaultScope:{
+    defaultScope: {
       where: {
         isActive: true
       }
     }
-  });
-  return Product;
-};
-
- 
+  })
+  return Product
+}

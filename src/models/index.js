@@ -1,54 +1,50 @@
 'use strict'
 
-require("dotenv").config();
+require('dotenv').config()
 
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+const parseError = require('parse-error')
+const basename = path.basename(__filename)
+const env = process.env.NODE_ENV || 'production'
+const config = require(`${__dirname}'../../config/config`)[env]
+const db = {}
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const parseError = require("parse-error");
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'production';
-const config = require(`${__dirname}'../../config/config`)[env];
-const db = {};
+const { logger } = require('../utils/pino-logger')
 
-const  { logger }  = require("../utils/pino-logger");
+let sequelize
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config)
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config)
+  logger.info('-- connecting to database has been established successfully --')
+}
 
-  let sequelize;
-  if (config.use_env_variable) {
-    
-    sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  } else {
-    sequelize = new Sequelize(config.database, config.username, config.password, config,{ logging: msg => logger.info(msg) } );
-    logger.info(`-- connection db has been established successfully --`);
-  }
-  
-  //console.log('ENV', env);
-  //console.log('CONFIG', config);
-  
-  sequelize.authenticate().then(()=>{
-  
-    fs
+// console.log('ENV', env);
+// console.log('CONFIG', config);
+
+sequelize.authenticate().then(() => {
+  fs
     .readdirSync(__dirname)
     .filter(file => {
-      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
     })
     .forEach(file => {
-      const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-      db[model.name] = model;
-    });
-  
-    Object.keys(db).forEach(modelName => {
-      if (db[modelName].associate) {
-        db[modelName].associate(db);
-      }
-    });
-    
-    db.sequelize = sequelize;
-    db.Sequelize = Sequelize;
-  
-  }).catch(error =>{
-     console.error('Connection Database Error', parseError(error));
-  });
+      const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
+      db[model.name] = model
+    })
 
-module.exports = db;
+  Object.keys(db).forEach(modelName => {
+    if (db[modelName].associate) {
+      db[modelName].associate(db)
+    }
+  })
+
+  db.sequelize = sequelize
+  db.Sequelize = Sequelize
+}).catch(error => {
+  console.error('Connection Database Error', parseError(error))
+})
+
+module.exports = db

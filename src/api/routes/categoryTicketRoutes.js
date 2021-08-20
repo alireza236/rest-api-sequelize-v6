@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
-const categoryTicket = require("../controllers/categoryTicketController");
+const categoryTicket = require('../controllers/categoryTicketController')
 
-router.get('/', categoryTicket.getCategoryTicket );
-router.post('/', categoryTicket.createCategoryTicket );
+router.get('/', categoryTicket.getCategoryTicket)
+router.post('/', categoryTicket.createCategoryTicket)
 
-module.exports = router;
+module.exports = router

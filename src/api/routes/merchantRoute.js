@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
-const merchant = require("../controllers/merchantController");
+const merchant = require('../controllers/merchantController')
 
-router.get('/', merchant.getListMerchant );
+router.get('/', merchant.getListMerchant)
 
-router.post('/', merchant.createMerchantProduct );
+router.post('/', merchant.createMerchantProduct)
 
-module.exports = router;
+module.exports = router

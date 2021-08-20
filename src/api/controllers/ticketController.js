@@ -102,8 +102,6 @@ const getListTicket = async (req, res, next) => {
     offset: offsetSize
   }
 
-  console.log('options', options)
-
   // remove object limit & offset, unlimited query
   if (limit && limit === 0) {
     options = _.omit(options, ['offset', 'limit'])

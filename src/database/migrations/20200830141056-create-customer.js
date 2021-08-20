@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('customers', {
@@ -14,7 +14,7 @@ module.exports = {
       lastname: {
         type: Sequelize.STRING(64)
       },
-      email:{
+      email: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -23,7 +23,7 @@ module.exports = {
       },
       address: {
         type: Sequelize.STRING
-      }, 
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
@@ -36,9 +36,9 @@ module.exports = {
         allowNull: Sequelize.NOW,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('customers');
+    await queryInterface.dropTable('customers')
   }
-};
+}

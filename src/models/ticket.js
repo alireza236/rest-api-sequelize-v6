@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Ticket extends Model {
     /**
@@ -9,25 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-       Ticket.belongsTo(models.CategoryTicket,{
-         foreignKey: 'categoryticketId'
-       });
+    static associate (models) {
+      Ticket.belongsTo(models.CategoryTicket, {
+        foreignKey: 'categoryticketId'
+      })
 
-       Ticket.belongsTo(models.User,{
-         foreignKey: 'userId'
-       });
+      Ticket.belongsTo(models.User, {
+        foreignKey: 'userId'
+      })
 
-       Ticket.belongsTo(models.User,{
-         as: 'assign',
-         foreignKey: 'assignId'
-      });
+      Ticket.belongsTo(models.User, {
+        as: 'assign',
+        foreignKey: 'assignId'
+      })
 
-       Ticket.belongsToMany(models.Customer,{
-         through: 'CustomerTicket',
-         foreignKey: 'ticketId',
-         otherKey: 'customerId'
-       });
+      Ticket.belongsToMany(models.Customer, {
+        through: 'CustomerTicket',
+        foreignKey: 'ticketId',
+        otherKey: 'customerId'
+      })
     }
   };
   Ticket.init({
@@ -62,21 +62,21 @@ module.exports = (sequelize, DataTypes) => {
     subject: {
       type: DataTypes.STRING
     },
-    description:{
+    description: {
       type: DataTypes.TEXT
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['open', 'closed', 'pending','resolved'],
-      defaultValue: 'open',
+      values: ['open', 'closed', 'pending', 'resolved'],
+      defaultValue: 'open'
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -86,12 +86,12 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Ticket',
     tableName: 'tickets',
-    defaultScope:{
+    defaultScope: {
       where: {
         isActive: true
       }
     }
-    
-  });
-  return Ticket;
-};
+
+  })
+  return Ticket
+}

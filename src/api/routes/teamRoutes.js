@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
-const team = require("../controllers/teamController");
+const team = require('../controllers/teamController')
 
-router.get('/', team.getTeamList );
-router.post('/', team.createTeam  );
+router.get('/', team.getTeamList)
+router.post('/', team.createTeam)
 
-module.exports = router;
+module.exports = router

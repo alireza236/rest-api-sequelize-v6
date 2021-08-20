@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('merchants', {
@@ -11,14 +11,14 @@ module.exports = {
       name: {
         type: Sequelize.STRING(64)
       },
-      owner_name :{
+      owner_name: {
         type: Sequelize.STRING(64)
       },
-      address : {
-        type:  Sequelize.STRING
+      address: {
+        type: Sequelize.STRING
       },
-      productId :{
-        type : Sequelize.UUID,
+      productId: {
+        type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
@@ -34,9 +34,9 @@ module.exports = {
         allowNull: Sequelize.NOW,
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('merchants');
+    await queryInterface.dropTable('merchants')
   }
-};
+}

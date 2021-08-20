@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Player extends Model {
     /**
@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate (models) {
       Player.belongsTo(models.Team, {
         foreignKey: 'teamId',
         as: 'team'
-      }); 
+      })
     }
   };
   Player.init({
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     name: {
-       type: DataTypes.STRING(64)
+      type: DataTypes.STRING(64)
     },
     height: {
       type: DataTypes.STRING(64)
@@ -45,15 +45,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     age: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: DataTypes.NOW,
+      allowNull: DataTypes.NOW
     },
     isActive: {
       type: DataTypes.BOOLEAN,
@@ -68,6 +68,6 @@ module.exports = (sequelize, DataTypes) => {
         isActive: true
       }
     }
-  });
-  return Player;
-};
+  })
+  return Player
+}
