@@ -12,7 +12,7 @@ function orderBuilder (params) {
 
   return chain(split(orderBy, ','))
     .map(x => {
-      if (x == 'priority') return ['id', sorting]
+      if (x === 'priority') return ['id', sorting]
       return [
         camelCase(x),
         sorting

@@ -100,6 +100,9 @@ passport.use('jwt', new JWTstrategy(opts, async (jwtPayload, done) => {
     const user = await db.User.findOne({
       where: {
         id: jwtPayload.id
+      },
+      attributes: {
+        exclude: ['password']
       }
     })
 

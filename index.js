@@ -13,7 +13,7 @@ const app = require('./src/app')
 
 const server = http.createServer(app)
 
-const env = process.env.NODE_ENV || 'production'
+const env = process.env.NODE_ENV;
 
 const PORT = env === 'production' ? process.env.PORT : 5000
 

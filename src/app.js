@@ -19,10 +19,14 @@ app.use(cors())
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
-// app.use(compression());
-// app.use(helmet());
+app.use(compression())
+app.use(helmet())
 
-app.use(expressPino)
+const env = process.env.NODE_ENV
+
+const LOGGER = env === 'production' ? morgan('combined') : expressPino
+
+app.use(LOGGER)
 
 app.get('/', (req, res) => {
   res.json({

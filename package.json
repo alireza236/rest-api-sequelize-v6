@@ -7,6 +7,7 @@
     "start": "node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint --fix src",
+    "db:migrate":"npx sequelize db:migrate:status --env production",
     "test": "ava"
   },
   "keywords": [],
